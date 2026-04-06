@@ -42,13 +42,51 @@ function EyebrowBadge({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
+function EarlyAccessForm() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setSubmitted(true);
+    setEmail("");
+  };
+
+  if (submitted) {
+    return (
+      <div className="mt-6 flex items-center gap-2 rounded-2xl bg-blue-100 px-5 py-4 text-blue-700">
+        <CheckCircle2 className="h-5 w-5 shrink-0" />
+        <span className="font-medium">You're on the list — we'll be in touch soon.</span>
+      </div>
+    );
+  }
+
   return (
-    // Change 1: hero widget gets more breathing room (p-8, shadow-2xl)
+    <form onSubmit={handleSubmit} className="mt-6">
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Input
+          type="email"
+          placeholder="your@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="h-12 rounded-2xl sm:w-72"
+          required
+        />
+        <Button type="submit" size="lg" className="rounded-2xl whitespace-nowrap">
+          Request early access <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+      <p className="mt-2 text-xs text-slate-400">No credit card. Setup in a day.</p>
+    </form>
+  );
+}
+
+function SectionHero({ eyebrow, title, copy, cta, secondary, icon, showCTA }: any) {
+  return (
     <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
       <div>
         <EyebrowBadge>{eyebrow}</EyebrowBadge>
-        {/* Change 2: title stays bold, copy is lighter */}
         <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
         <p className="mt-4 max-w-xl text-lg leading-8 text-slate-500">{copy}</p>
         <div className="mt-8 flex flex-wrap gap-3">
@@ -59,6 +97,7 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
             </Button>
           ) : null}
         </div>
+        {showCTA && <EarlyAccessForm />}
       </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -114,6 +153,7 @@ function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
         copy="Detects risk, chooses the right intervention, triggers recovery actions, and learns what wins users back. Built for B2C apps that want outcomes, not more manual work."
         cta={{ label: "Run a sample recovery", onClick: () => setCurrent("detect") }}
         secondary={{ label: "See how it works", onClick: () => setCurrent("detect") }}
+        showCTA
         icon={
           <div className="space-y-4">
             <div className="flex items-center justify-between rounded-2xl border bg-blue-100 p-5">
