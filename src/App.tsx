@@ -22,22 +22,35 @@ function NavButton({ current, setCurrent, item }: { current: string; setCurrent:
   );
 }
 
+// Change 3: Stat cards with accent bar + gradient
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border bg-white p-5 shadow-sm">
-      <div className="text-2xl font-semibold text-slate-900">{value}</div>
-      <div className="mt-1 text-sm text-slate-600">{label}</div>
+    <div className="relative overflow-hidden rounded-2xl border bg-white p-6 shadow-sm">
+      <div className="absolute left-0 top-0 h-full w-1 rounded-l-2xl bg-blue-400" />
+      <div className="text-3xl font-bold text-slate-900">{value}</div>
+      <div className="mt-1 text-sm font-medium uppercase tracking-wide text-slate-400">{label}</div>
     </div>
+  );
+}
+
+// Change 6: Badge with blue tint
+function EyebrowBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
+      {children}
+    </span>
   );
 }
 
 function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
   return (
+    // Change 1: hero widget gets more breathing room (p-8, shadow-2xl)
     <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
       <div>
-        <Badge className="rounded-full px-3 py-1">{eyebrow}</Badge>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
-        <p className="mt-4 max-w-xl text-lg leading-8 text-slate-600">{copy}</p>
+        <EyebrowBadge>{eyebrow}</EyebrowBadge>
+        {/* Change 2: title stays bold, copy is lighter */}
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">{title}</h1>
+        <p className="mt-4 max-w-xl text-lg leading-8 text-slate-500">{copy}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button size="lg" className="rounded-2xl" onClick={cta?.onClick}>{cta?.label}</Button>
           {secondary ? (
@@ -51,7 +64,7 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="rounded-[2rem] border bg-white p-6 shadow-xl"
+        className="rounded-[2rem] border bg-white p-8 shadow-2xl"
       >
         {icon}
       </motion.div>
@@ -59,6 +72,7 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
   );
 }
 
+// Change 4: Process nav with blue tint numbers
 function ProcessNav({ setCurrent }: { setCurrent: (v: string) => void }) {
   const items = [
     { key: "detect", title: "Detect", desc: "Spot at-risk users early" },
@@ -77,11 +91,14 @@ function ProcessNav({ setCurrent }: { setCurrent: (v: string) => void }) {
           className="rounded-[1.75rem] border bg-white p-6 text-left shadow-sm transition hover:shadow-lg"
         >
           <div className="flex items-center justify-between">
-            <div className="text-sm font-medium text-slate-500">0{i + 1}</div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+              0{i + 1}
+            </div>
             <ArrowRight className="h-4 w-4 text-slate-400" />
           </div>
-          <div className="mt-4 text-2xl font-semibold text-slate-900">{item.title}</div>
-          <p className="mt-2 text-sm leading-6 text-slate-600">{item.desc}</p>
+          {/* Change 2: card title bolder */}
+          <div className="mt-4 text-2xl font-bold text-slate-900">{item.title}</div>
+          <p className="mt-2 text-sm leading-6 text-slate-500">{item.desc}</p>
         </motion.button>
       ))}
     </div>
@@ -99,40 +116,40 @@ function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
         secondary={{ label: "See how it works", onClick: () => setCurrent("detect") }}
         icon={
           <div className="space-y-4">
-            <div className="flex items-center justify-between rounded-2xl border bg-slate-50 p-4">
+            <div className="flex items-center justify-between rounded-2xl border bg-blue-100 p-5">
               <div>
-                <div className="text-sm text-slate-500">User health</div>
-                <div className="text-xl font-semibold">High churn risk</div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">User health</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">High churn risk</div>
               </div>
-              <Target className="h-8 w-8 text-slate-700" />
+              <Target className="h-9 w-9 text-blue-500" />
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
-                  <div className="text-sm text-slate-500">Detect</div>
-                  <div className="mt-2 font-medium">Inactive for 7 days</div>
-                  <div className="text-sm text-slate-600">Low feature usage</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Detect</div>
+                  <div className="mt-2 font-bold text-slate-900">Inactive for 7 days</div>
+                  <div className="text-sm text-slate-500">Low feature usage</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
-                  <div className="text-sm text-slate-500">Decide</div>
-                  <div className="mt-2 font-medium">Feature education</div>
-                  <div className="text-sm text-slate-600">Channel: Push</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Decide</div>
+                  <div className="mt-2 font-bold text-slate-900">Feature education</div>
+                  <div className="text-sm text-slate-500">Channel: Push</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
-                  <div className="text-sm text-slate-500">Act</div>
-                  <div className="mt-2 font-medium">Personalized message sent</div>
-                  <div className="text-sm text-slate-600">Triggered at 7pm</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Act</div>
+                  <div className="mt-2 font-bold text-slate-900">Message sent</div>
+                  <div className="text-sm text-slate-500">Triggered at 7pm</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
-                  <div className="text-sm text-slate-500">Learn</div>
-                  <div className="mt-2 font-medium">Subscription renewed</div>
-                  <div className="text-sm text-slate-600">System improves next action</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Learn</div>
+                  <div className="mt-2 font-bold text-slate-900">Subscription renewed</div>
+                  <div className="text-sm text-slate-500">Model improves</div>
                 </CardContent>
               </Card>
             </div>
@@ -142,16 +159,16 @@ function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
 
       <section className="rounded-[2rem] border bg-white p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
-          <Sparkles className="h-5 w-5 text-slate-700" />
-          <h2 className="text-2xl font-semibold text-slate-900">Open each part of the system</h2>
+          <Sparkles className="h-5 w-5 text-blue-500" />
+          <h2 className="text-2xl font-bold text-slate-900">Open each part of the system</h2>
         </div>
         <ProcessNav setCurrent={setCurrent} />
       </section>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <Stat label="Recovered users" value="10–20%" />
+        <Stat label="Users recovered" value="10–20%" />
         <Stat label="Time to outcome" value="30 days" />
-        <Stat label="Setup style" value="Automation with guardrails" />
+        <Stat label="Actions automated" value="100%" />
       </section>
     </div>
   );
@@ -169,22 +186,22 @@ function DetectPage({ setCurrent }: { setCurrent: (v: string) => void }) {
         icon={
           <Card className="rounded-[1.75rem] border-0 shadow-none">
             <CardHeader>
-              <CardTitle>Live detection example</CardTitle>
+              <CardTitle className="font-bold">Live detection example</CardTitle>
               <CardDescription>User became inactive for 7 days</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="rounded-2xl bg-slate-50 p-4">
-                <div className="text-sm text-slate-500">Churn risk</div>
-                <div className="text-2xl font-semibold">HIGH</div>
+              <div className="rounded-2xl bg-blue-100 p-5">
+                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Churn risk</div>
+                <div className="mt-1 text-3xl font-bold text-slate-900">HIGH</div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border p-4">
-                  <div className="text-sm text-slate-500">State</div>
-                  <div className="mt-1 font-medium">Declining</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">State</div>
+                  <div className="mt-1 font-bold text-slate-900">Declining</div>
                 </div>
                 <div className="rounded-2xl border p-4">
-                  <div className="text-sm text-slate-500">Reason</div>
-                  <div className="mt-1 font-medium">Low usage</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Reason</div>
+                  <div className="mt-1 font-bold text-slate-900">Low usage</div>
                 </div>
               </div>
             </CardContent>
@@ -195,20 +212,29 @@ function DetectPage({ setCurrent }: { setCurrent: (v: string) => void }) {
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
-            <div className="mb-3 flex items-center gap-2"><Bell className="h-4 w-4" /><span className="font-medium">Behavior signals</span></div>
-            <p className="text-sm leading-6 text-slate-600">Inactivity windows, drop in sessions, lower feature depth, and renewal warning signs.</p>
+            <div className="mb-3 flex items-center gap-2">
+              <div className="rounded-lg bg-blue-100 p-2"><Bell className="h-4 w-4 text-blue-600" /></div>
+              <span className="font-bold text-slate-900">Behavior signals</span>
+            </div>
+            <p className="text-sm leading-6 text-slate-500">Inactivity windows, drop in sessions, lower feature depth, and renewal warning signs.</p>
           </CardContent>
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
-            <div className="mb-3 flex items-center gap-2"><BarChart3 className="h-4 w-4" /><span className="font-medium">Risk scoring</span></div>
-            <p className="text-sm leading-6 text-slate-600">Each user is prioritized by probability of churn and expected recovery value.</p>
+            <div className="mb-3 flex items-center gap-2">
+              <div className="rounded-lg bg-blue-100 p-2"><BarChart3 className="h-4 w-4 text-blue-600" /></div>
+              <span className="font-bold text-slate-900">Risk scoring</span>
+            </div>
+            <p className="text-sm leading-6 text-slate-500">Each user is prioritized by probability of churn and expected recovery value.</p>
           </CardContent>
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
-            <div className="mb-3 flex items-center gap-2"><ShieldCheck className="h-4 w-4" /><span className="font-medium">Transparent triggers</span></div>
-            <p className="text-sm leading-6 text-slate-600">Show exactly why a user was flagged so teams can trust the automation.</p>
+            <div className="mb-3 flex items-center gap-2">
+              <div className="rounded-lg bg-blue-100 p-2"><ShieldCheck className="h-4 w-4 text-blue-600" /></div>
+              <span className="font-bold text-slate-900">Transparent triggers</span>
+            </div>
+            <p className="text-sm leading-6 text-slate-500">Show exactly why a user was flagged so teams can trust the automation.</p>
           </CardContent>
         </Card>
       </div>
@@ -227,20 +253,20 @@ function DecidePage({ setCurrent }: { setCurrent: (v: string) => void }) {
         secondary={{ label: "Back: Detect", onClick: () => setCurrent("detect") }}
         icon={
           <div className="space-y-4">
-            <div className="rounded-2xl border p-4">
-              <div className="text-sm text-slate-500">AI chooses</div>
+            <div className="rounded-2xl border p-5">
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">AI chooses</div>
               <div className="mt-3 grid gap-3">
-                <div className="rounded-xl bg-slate-50 p-3">
-                  <div className="text-xs uppercase tracking-wide text-slate-500">Action</div>
-                  <div className="font-medium">Feature education</div>
+                <div className="rounded-xl bg-blue-100 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Action</div>
+                  <div className="mt-1 font-bold text-slate-900">Feature education</div>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-3">
-                  <div className="text-xs uppercase tracking-wide text-slate-500">Channel</div>
-                  <div className="font-medium">Push notification</div>
+                <div className="rounded-xl bg-blue-100 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Channel</div>
+                  <div className="mt-1 font-bold text-slate-900">Push notification</div>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-3">
-                  <div className="text-xs uppercase tracking-wide text-slate-500">Best time</div>
-                  <div className="font-medium">7:00 PM</div>
+                <div className="rounded-xl bg-blue-100 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Best time</div>
+                  <div className="mt-1 font-bold text-slate-900">7:00 PM</div>
                 </div>
               </div>
             </div>
@@ -251,10 +277,10 @@ function DecidePage({ setCurrent }: { setCurrent: (v: string) => void }) {
       <div className="grid gap-6 md:grid-cols-2">
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle>Decision logic</CardTitle>
+            <CardTitle className="font-bold">Decision logic</CardTitle>
             <CardDescription>What the system weighs before it acts.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-600">
+          <CardContent className="space-y-3 text-sm text-slate-500">
             <div>• User segment and lifecycle stage</div>
             <div>• Previous successful interventions</div>
             <div>• Channel responsiveness</div>
@@ -263,10 +289,10 @@ function DecidePage({ setCurrent }: { setCurrent: (v: string) => void }) {
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle>Manual control optional</CardTitle>
+            <CardTitle className="font-bold">Manual control optional</CardTitle>
             <CardDescription>Automation with guardrails.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-600">
+          <CardContent className="space-y-3 text-sm text-slate-500">
             <div>• Approve actions before send</div>
             <div>• Set discount limits and frequency caps</div>
             <div>• Restrict channels by segment</div>
@@ -292,13 +318,13 @@ function ActPage({ setCurrent }: { setCurrent: (v: string) => void }) {
         secondary={{ label: "Back: Decide", onClick: () => setCurrent("decide") }}
         icon={
           <div className="space-y-4">
-            <div className="rounded-2xl border p-4">
-              <div className="text-sm text-slate-500">Message preview</div>
-              <div className="mt-3 rounded-2xl bg-slate-50 p-4 text-base leading-7 text-slate-800">{preview}</div>
+            <div className="rounded-2xl border p-5">
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Message preview</div>
+              <div className="mt-3 rounded-2xl bg-blue-100 p-4 text-base leading-7 text-slate-800">{preview}</div>
             </div>
             <div className="rounded-2xl border p-4">
-              <div className="text-sm text-slate-500">Channel</div>
-              <div className="mt-1 font-medium">Push notification</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Channel</div>
+              <div className="mt-1 font-bold text-slate-900">Push notification</div>
             </div>
           </div>
         }
@@ -307,7 +333,7 @@ function ActPage({ setCurrent }: { setCurrent: (v: string) => void }) {
       <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle>Interactive sample action</CardTitle>
+            <CardTitle className="font-bold">Interactive sample action</CardTitle>
             <CardDescription>Edit the message to simulate a recovery intervention.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -317,9 +343,9 @@ function ActPage({ setCurrent }: { setCurrent: (v: string) => void }) {
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle>Why this matters</CardTitle>
+            <CardTitle className="font-bold">Why this matters</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-600">
+          <CardContent className="space-y-3 text-sm text-slate-500">
             <div>Teams often stop at identifying churn.</div>
             <div>Your product closes the loop by turning decisions into action.</div>
             <div>That is where recovery revenue is won or lost.</div>
@@ -340,39 +366,39 @@ function LearnPage({ setCurrent }: { setCurrent: (v: string) => void }) {
         cta={{ label: "Back to overview", onClick: () => setCurrent("home") }}
         secondary={{ label: "Back: Act", onClick: () => setCurrent("act") }}
         icon={
-          <div className="space-y-4">
-            <div className="rounded-2xl border bg-slate-50 p-4">
-              <div className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5" /><span className="font-medium">User returns</span></div>
+          <div className="space-y-3">
+            <div className="rounded-2xl border bg-blue-100 p-4">
+              <div className="flex items-center gap-3"><CheckCircle2 className="h-5 w-5 text-blue-600" /><span className="font-bold text-slate-900">User returns</span></div>
             </div>
-            <div className="rounded-2xl border bg-slate-50 p-4">
-              <div className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5" /><span className="font-medium">Subscription renewed</span></div>
+            <div className="rounded-2xl border bg-blue-100 p-4">
+              <div className="flex items-center gap-3"><CheckCircle2 className="h-5 w-5 text-blue-600" /><span className="font-bold text-slate-900">Subscription renewed</span></div>
             </div>
-            <div className="rounded-2xl border bg-slate-50 p-4">
-              <div className="flex items-center gap-2"><Brain className="h-5 w-5" /><span className="font-medium">System learns best action for this user type</span></div>
+            <div className="rounded-2xl border bg-blue-100 p-4">
+              <div className="flex items-center gap-3"><Brain className="h-5 w-5 text-blue-600" /><span className="font-bold text-slate-900">System learns best action for this user type</span></div>
             </div>
           </div>
         }
       />
 
       <div className="grid gap-4 md:grid-cols-3">
-        <Stat label="Primary KPI" value="% users recovered" />
+        <Stat label="Primary KPI" value="% recovered" />
         <Stat label="Commercial KPI" value="Revenue saved" />
-        <Stat label="Optimization KPI" value="Best-performing actions" />
+        <Stat label="Optimization KPI" value="Best actions" />
       </div>
 
       <Card className="rounded-[1.75rem]">
         <CardHeader>
-          <CardTitle>Outcome over activity</CardTitle>
+          <CardTitle className="font-bold">Outcome over activity</CardTitle>
           <CardDescription>Do not optimize for messages sent. Optimize for churn recovered.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border p-5">
-            <div className="text-sm text-slate-500">Vanity metric</div>
-            <div className="mt-2 text-xl font-semibold">Emails sent</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Vanity metric</div>
+            <div className="mt-2 text-xl font-bold text-slate-900">Emails sent</div>
           </div>
-          <div className="rounded-2xl border p-5 bg-slate-50">
-            <div className="text-sm text-slate-500">Real metric</div>
-            <div className="mt-2 text-xl font-semibold">Recovered subscriptions</div>
+          <div className="rounded-2xl border bg-blue-100 p-5">
+            <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Real metric</div>
+            <div className="mt-2 text-xl font-bold text-slate-900">Recovered subscriptions</div>
           </div>
         </CardContent>
       </Card>
@@ -386,10 +412,11 @@ export default function App() {
   return (
     <div className="min-h-screen bg-blue-50 text-slate-900">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10">
+        {/* Change 5: header subtitle replaced with value prop */}
         <header className="mb-10 flex flex-col gap-4 rounded-[2rem] border bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="text-lg font-semibold">Churn Recovery AI</div>
-            <div className="text-sm text-slate-500">Interactive landing page with separate product sections</div>
+            <div className="text-lg font-bold text-slate-900">Churn Recovery AI</div>
+            <div className="text-sm text-slate-500">Recover at-risk users automatically — no manual work required</div>
           </div>
           <nav className="flex flex-wrap gap-2">
             {NAV_ITEMS.map((item) => (
@@ -402,7 +429,7 @@ export default function App() {
           {current !== "home" && (
             <button
               onClick={() => setCurrent("home")}
-              className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900"
+              className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900"
             >
               <ChevronLeft className="h-4 w-4" /> Back to overview
             </button>
