@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, ChevronLeft, Play, ShieldCheck, Sparkles, BarChart3, Bell, Brain, Target } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronLeft, Play, ShieldCheck, Sparkles, BarChart3, Bell, Brain, Target, Zap, Link } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -114,7 +114,7 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon, showCTA }: an
 // Change 4: Process nav with blue tint numbers
 function ProcessNav({ setCurrent }: { setCurrent: (v: string) => void }) {
   const items = [
-    { key: "detect", title: "Detect", desc: "Spot at-risk users early" },
+    { key: "detect", title: "Detect", desc: "Connect Stripe — cancellations flow in automatically" },
     { key: "decide", title: "Decide", desc: "Choose best action and channel" },
     { key: "act", title: "Act", desc: "Launch personalized recovery" },
     { key: "learn", title: "Learn", desc: "Improve outcomes over time" },
@@ -149,47 +149,48 @@ function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
     <div className="space-y-12">
       <SectionHero
         eyebrow="AI churn recovery"
-        title="Recover churn automatically — not with another dashboard"
-        copy="Detects risk, chooses the right intervention, triggers recovery actions, and learns what wins users back. Built for B2C apps that want outcomes, not more manual work."
-        cta={{ label: "Run a sample recovery", onClick: () => setCurrent("detect") }}
-        secondary={{ label: "See how it works", onClick: () => setCurrent("detect") }}
+        title="Connect Stripe. Win back churned customers automatically."
+        copy="Every cancellation triggers a personalised winback campaign — the right message, the right channel, at the right time. No manual work. No integrations beyond Stripe."
+        cta={{ label: "See a live recovery", onClick: () => setCurrent("act") }}
+        secondary={{ label: "How it works", onClick: () => setCurrent("detect") }}
         showCTA
         icon={
           <div className="space-y-4">
             <div className="flex items-center justify-between rounded-2xl border bg-blue-100 p-5">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">User health</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">High churn risk</div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Stripe event received</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">customer.subscription.deleted</div>
+                <div className="text-sm text-slate-500 mt-1">Sarah K. · Pro · $24.99/mo</div>
               </div>
-              <Target className="h-9 w-9 text-blue-500" />
+              <Zap className="h-9 w-9 text-blue-500" />
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Detect</div>
-                  <div className="mt-2 font-bold text-slate-900">Inactive for 7 days</div>
-                  <div className="text-sm text-slate-500">Low feature usage</div>
+                  <div className="mt-2 font-bold text-slate-900">Cancellation logged</div>
+                  <div className="text-sm text-slate-500">Reason: small issues added up</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Decide</div>
-                  <div className="mt-2 font-bold text-slate-900">Feature education</div>
-                  <div className="text-sm text-slate-500">Channel: Push</div>
+                  <div className="mt-2 font-bold text-slate-900">Winback message</div>
+                  <div className="text-sm text-slate-500">Channel: Email</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Act</div>
-                  <div className="mt-2 font-bold text-slate-900">Message sent</div>
-                  <div className="text-sm text-slate-500">Triggered at 7pm</div>
+                  <div className="mt-2 font-bold text-slate-900">Email sent to Sarah</div>
+                  <div className="text-sm text-slate-500">Personalised to her reason</div>
                 </CardContent>
               </Card>
               <Card className="rounded-2xl">
                 <CardContent className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Learn</div>
-                  <div className="mt-2 font-bold text-slate-900">Subscription renewed</div>
-                  <div className="text-sm text-slate-500">Model improves</div>
+                  <div className="mt-2 font-bold text-slate-900">Resubscribed</div>
+                  <div className="text-sm text-slate-500">$24.99/mo recovered</div>
                 </CardContent>
               </Card>
             </div>
@@ -219,33 +220,41 @@ function DetectPage({ setCurrent }: { setCurrent: (v: string) => void }) {
     <div className="space-y-10">
       <SectionHero
         eyebrow="01 · Detect"
-        title="Know who is drifting before they churn"
-        copy="The system continuously watches inactivity, declining usage, and behavior changes to identify recovery opportunities early."
+        title="Connect Stripe once — every cancellation flows in automatically"
+        copy="No spreadsheets. No manual exports. The moment a subscription is cancelled in Stripe, we receive the event and start the recovery process."
         cta={{ label: "Next: Decide", onClick: () => setCurrent("decide") }}
         secondary={{ label: "Back to overview", onClick: () => setCurrent("home") }}
         icon={
-          <Card className="rounded-[1.75rem] border-0 shadow-none">
-            <CardHeader>
-              <CardTitle className="font-bold">Live detection example</CardTitle>
-              <CardDescription>User became inactive for 7 days</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-2xl bg-blue-100 p-5">
-                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Churn risk</div>
-                <div className="mt-1 text-3xl font-bold text-slate-900">HIGH</div>
+          <div className="space-y-3">
+            <div className="rounded-2xl bg-blue-100 p-5">
+              <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Stripe webhook received</div>
+              <div className="mt-1 text-lg font-bold text-slate-900">customer.subscription.deleted</div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border bg-white p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Customer</div>
+                <div className="mt-1 font-bold text-slate-900">Sarah K.</div>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">State</div>
-                  <div className="mt-1 font-bold text-slate-900">Declining</div>
-                </div>
-                <div className="rounded-2xl border p-4">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Reason</div>
-                  <div className="mt-1 font-bold text-slate-900">Low usage</div>
-                </div>
+              <div className="rounded-2xl border bg-white p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">MRR lost</div>
+                <div className="mt-1 font-bold text-slate-900">$24.99/mo</div>
               </div>
-            </CardContent>
-          </Card>
+              <div className="rounded-2xl border bg-white p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Plan</div>
+                <div className="mt-1 font-bold text-slate-900">Pro</div>
+              </div>
+              <div className="rounded-2xl border bg-white p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Reason</div>
+                <div className="mt-1 font-bold text-slate-900">Small issues added up</div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-green-200 bg-green-50 p-4">
+              <div className="flex items-center gap-2 text-green-700">
+                <Zap className="h-4 w-4 shrink-0" />
+                <span className="text-sm font-medium">Recovery process started automatically</span>
+              </div>
+            </div>
+          </div>
         }
       />
 
@@ -253,28 +262,28 @@ function DetectPage({ setCurrent }: { setCurrent: (v: string) => void }) {
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
             <div className="mb-3 flex items-center gap-2">
-              <div className="rounded-lg bg-blue-100 p-2"><Bell className="h-4 w-4 text-blue-600" /></div>
-              <span className="font-bold text-slate-900">Behavior signals</span>
+              <div className="rounded-lg bg-blue-100 p-2"><Link className="h-4 w-4 text-blue-600" /></div>
+              <span className="font-bold text-slate-900">One-click Stripe connect</span>
             </div>
-            <p className="text-sm leading-6 text-slate-500">Inactivity windows, drop in sessions, lower feature depth, and renewal warning signs.</p>
+            <p className="text-sm leading-6 text-slate-500">OAuth connection takes two clicks. No API keys to copy, no webhook URLs to configure manually.</p>
           </CardContent>
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
             <div className="mb-3 flex items-center gap-2">
-              <div className="rounded-lg bg-blue-100 p-2"><BarChart3 className="h-4 w-4 text-blue-600" /></div>
-              <span className="font-bold text-slate-900">Risk scoring</span>
+              <div className="rounded-lg bg-blue-100 p-2"><Zap className="h-4 w-4 text-blue-600" /></div>
+              <span className="font-bold text-slate-900">Real-time cancellation feed</span>
             </div>
-            <p className="text-sm leading-6 text-slate-500">Each user is prioritized by probability of churn and expected recovery value.</p>
+            <p className="text-sm leading-6 text-slate-500">Every <code className="rounded bg-blue-50 px-1 text-blue-700 text-xs">subscription.deleted</code> event is captured instantly — plan, MRR, tenure, and cancellation reason included.</p>
           </CardContent>
         </Card>
         <Card className="rounded-[1.75rem]">
           <CardContent className="p-6">
             <div className="mb-3 flex items-center gap-2">
               <div className="rounded-lg bg-blue-100 p-2"><ShieldCheck className="h-4 w-4 text-blue-600" /></div>
-              <span className="font-bold text-slate-900">Transparent triggers</span>
+              <span className="font-bold text-slate-900">No other integration needed</span>
             </div>
-            <p className="text-sm leading-6 text-slate-500">Show exactly why a user was flagged so teams can trust the automation.</p>
+            <p className="text-sm leading-6 text-slate-500">Stripe has the data you need — who cancelled, what they paid, and why. That's enough to run personalised winback campaigns.</p>
           </CardContent>
         </Card>
       </div>
