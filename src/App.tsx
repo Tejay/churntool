@@ -344,51 +344,165 @@ function DecidePage({ setCurrent }: { setCurrent: (v: string) => void }) {
   );
 }
 
+const WINBACK_MESSAGE = `You weren't wrong.
+
+Some parts didn't work as smoothly as they should have — and we heard that clearly.
+
+Since then, we've:
+· Fixed the sync issues
+· Improved speed across the app
+· Removed the glitches that caused interruptions
+
+It's now a much more reliable experience.
+
+If you're open to it, give it another try — we think you'll feel the difference.
+
+→ See what's improved`;
+
+type SendState = "idle" | "sending" | "sent" | "outcome";
+
 function ActPage({ setCurrent }: { setCurrent: (v: string) => void }) {
-  const [message, setMessage] = useState("You last used Workout Plans 10 days ago — here's what's new.");
-  const preview = useMemo(() => message.trim() || "Your recovery message will appear here.", [message]);
+  const [message, setMessage] = useState(WINBACK_MESSAGE);
+  const [sendState, setSendState] = useState<SendState>("idle");
+
+  const handleSend = () => {
+    setSendState("sending");
+    setTimeout(() => setSendState("sent"), 900);
+    setTimeout(() => setSendState("outcome"), 2200);
+  };
+
+  const handleReset = () => {
+    setSendState("idle");
+    setMessage(WINBACK_MESSAGE);
+  };
 
   return (
     <div className="space-y-10">
       <SectionHero
         eyebrow="03 · Act"
         title="Trigger personalized recovery actions automatically"
-        copy="Once a decision is made, the system launches the right message through the right channel so recovery actually happens."
+        copy="Once a decision is made, the system finds the churned user, crafts the right message, and sends it — without anyone lifting a finger."
         cta={{ label: "Next: Learn", onClick: () => setCurrent("learn") }}
         secondary={{ label: "Back: Decide", onClick: () => setCurrent("decide") }}
         icon={
-          <div className="space-y-4">
-            <div className="rounded-2xl border p-5">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Message preview</div>
-              <div className="mt-3 rounded-2xl bg-blue-100 p-4 text-base leading-7 text-slate-800">{preview}</div>
+          <div className="space-y-3">
+            <div className="rounded-2xl bg-blue-100 p-4">
+              <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Churned user</div>
+              <div className="mt-1 text-lg font-bold text-slate-900">Sarah K.</div>
+              <div className="text-sm text-slate-500">Cancelled 8 days ago · Was paying $24.99/mo</div>
+              <div className="mt-2 text-xs text-slate-500">Reason logged: <span className="font-medium text-slate-700">"small issues added up"</span></div>
             </div>
-            <div className="rounded-2xl border p-4">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Channel</div>
-              <div className="mt-1 font-bold text-slate-900">Push notification</div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="rounded-xl border bg-white p-3 text-center">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Action</div>
+                <div className="mt-1 text-sm font-bold text-slate-900">Winback</div>
+              </div>
+              <div className="rounded-xl border bg-white p-3 text-center">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Channel</div>
+                <div className="mt-1 text-sm font-bold text-slate-900">Email</div>
+              </div>
+              <div className="rounded-xl border bg-white p-3 text-center">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Timing</div>
+                <div className="mt-1 text-sm font-bold text-slate-900">Now</div>
+              </div>
             </div>
           </div>
         }
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        {/* Left: interactive demo */}
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle className="font-bold">Interactive sample action</CardTitle>
-            <CardDescription>Edit the message to simulate a recovery intervention.</CardDescription>
+            <CardTitle className="font-bold">Winback message — Sarah K.</CardTitle>
+            <CardDescription>Edit the message, then run the recovery to see the outcome.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Input value={message} onChange={(e) => setMessage(e.target.value)} className="h-12 rounded-xl" />
-            <Button className="rounded-2xl"><Play className="mr-2 h-4 w-4" />Run sample recovery</Button>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              disabled={sendState !== "idle"}
+              rows={10}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-400 disabled:opacity-60 resize-none"
+            />
+
+            {sendState === "idle" && (
+              <Button className="rounded-2xl" onClick={handleSend}>
+                <Play className="mr-2 h-4 w-4" />Send recovery email
+              </Button>
+            )}
+
+            {sendState === "sending" && (
+              <Button className="rounded-2xl" disabled>
+                <motion.span
+                  animate={{ opacity: [1, 0.4, 1] }}
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                  className="mr-2 h-2 w-2 rounded-full bg-white inline-block"
+                />
+                Sending…
+              </Button>
+            )}
+
+            {(sendState === "sent" || sendState === "outcome") && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 rounded-2xl bg-green-50 px-4 py-3 text-green-700">
+                  <CheckCircle2 className="h-5 w-5 shrink-0" />
+                  <span className="font-medium">Email sent to Sarah K.</span>
+                </div>
+
+                {sendState === "outcome" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="rounded-2xl border bg-blue-50 p-5 space-y-3"
+                  >
+                    <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Outcome</div>
+                    <div className="space-y-2">
+                      {[
+                        "Sarah opened the email",
+                        'Clicked "See what\'s improved"',
+                        "Resubscribed to Pro",
+                      ].map((step) => (
+                        <div key={step} className="flex items-center gap-2 text-sm text-slate-700">
+                          <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
+                          {step}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="rounded-xl bg-white border px-4 py-3">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Revenue recovered</div>
+                      <div className="mt-1 text-2xl font-bold text-slate-900">$24.99<span className="text-sm font-medium text-slate-400">/mo</span></div>
+                    </div>
+                  </motion.div>
+                )}
+
+                <button onClick={handleReset} className="text-xs text-slate-400 hover:text-slate-700 underline">
+                  Reset demo
+                </button>
+              </div>
+            )}
           </CardContent>
         </Card>
+
+        {/* Right: why this matters */}
         <Card className="rounded-[1.75rem]">
           <CardHeader>
-            <CardTitle className="font-bold">Why this matters</CardTitle>
+            <CardTitle className="font-bold">Why this works</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-sm text-slate-500">
-            <div>Teams often stop at identifying churn.</div>
-            <div>Your product closes the loop by turning decisions into action.</div>
-            <div>That is where recovery revenue is won or lost.</div>
+          <CardContent className="space-y-4 text-sm text-slate-500">
+            <div className="rounded-2xl bg-blue-50 p-4">
+              <div className="font-bold text-slate-900 mb-1">Accountability, not discounts</div>
+              <div>The message leads with honesty — "You weren't wrong." That's more powerful than a coupon for users who left over quality issues.</div>
+            </div>
+            <div className="rounded-2xl bg-blue-50 p-4">
+              <div className="font-bold text-slate-900 mb-1">Reason-matched messaging</div>
+              <div>The system knows Sarah left because "small issues added up" — so the message addresses exactly that, not a generic offer.</div>
+            </div>
+            <div className="rounded-2xl bg-blue-50 p-4">
+              <div className="font-bold text-slate-900 mb-1">Zero manual work</div>
+              <div>This runs automatically for every churned user that matches the pattern. No one had to write Sarah's email by hand.</div>
+            </div>
           </CardContent>
         </Card>
       </div>
