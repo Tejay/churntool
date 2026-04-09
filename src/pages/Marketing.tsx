@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 function EyebrowBadge({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-700">
+    <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
       {children}
     </span>
   );
@@ -17,21 +17,24 @@ function Header({ navigate }: { navigate: NavigateFunction }) {
     document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
-    <header className="mb-20 flex items-center justify-between rounded-[2rem] border bg-white/80 px-5 py-3 shadow-sm backdrop-blur">
+    <header className="mb-24 flex items-center justify-between rounded-[2rem] border border-slate-200/60 bg-white/70 px-5 py-3 shadow-sm backdrop-blur-xl">
       <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600">
           <Zap className="h-4 w-4 text-white" />
         </div>
-        <span className="text-lg font-bold text-slate-900">Winback</span>
+        <span className="text-[17px] font-semibold tracking-tight text-slate-900">Winback</span>
       </button>
       <nav className="flex items-center gap-1">
         <button
           onClick={handleScrollToHowItWorks}
-          className="hidden rounded-full px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 sm:inline-flex"
+          className="hidden rounded-full px-4 py-2 text-[13px] font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 sm:inline-flex"
         >
           How it works
         </button>
-        <Link to="/login" className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">
+        <Link
+          to="/login"
+          className="rounded-full px-4 py-2 text-[13px] font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+        >
           Log in
         </Link>
         <Button onClick={() => navigate("/register")} className="rounded-full" size="sm">
@@ -47,47 +50,64 @@ function Hero({ navigate }: { navigate: NavigateFunction }) {
     document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
-    <section className="grid gap-10 pb-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pb-40">
-      <div>
-        <EyebrowBadge>AI churn recovery</EyebrowBadge>
-        <h1 className="mt-5 text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl">
-          Connect Stripe.
+    <section className="pb-32 pt-6 lg:pb-48 lg:pt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-4xl text-center"
+      >
+        <EyebrowBadge>New · AI churn recovery</EyebrowBadge>
+        <h1 className="mt-6 text-[3.25rem] font-semibold leading-[1.02] tracking-tightest text-slate-900 sm:text-7xl md:text-[5.5rem]">
+          Win back churn.
           <br />
-          Win back churned customers automatically.
+          <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+            Automatically.
+          </span>
         </h1>
-        <p className="mt-6 max-w-xl text-lg leading-8 text-slate-500">
-          Every cancellation triggers a personalised winback email — written for the reason they left.
+        <p className="mx-auto mt-7 max-w-2xl text-xl leading-8 text-slate-500 sm:text-[1.375rem] sm:leading-9">
+          Connect Stripe. Every cancellation triggers a personalised winback email — written for the reason they left.
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-4">
-          <Button size="lg" className="rounded-2xl" onClick={() => navigate("/register")}>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+          <Button size="lg" className="rounded-full px-7 text-base" onClick={() => navigate("/register")}>
             Get started <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-          <button onClick={handleScrollToHowItWorks} className="text-sm font-medium text-slate-500 hover:text-slate-900">
-            How it works →
+          <button
+            onClick={handleScrollToHowItWorks}
+            className="text-base font-medium text-blue-600 hover:text-blue-700"
+          >
+            How it works <span aria-hidden>›</span>
           </button>
         </div>
-        <p className="mt-4 text-xs text-slate-400">
-          Free until your first recovery · Then £49/mo + 10% of what we win back (first year only) · No card required
+        <p className="mt-6 text-[13px] text-slate-400">
+          Free until your first recovery · £49/mo + 10% thereafter · No card required
         </p>
-      </div>
+      </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
-        className="rounded-[2rem] border bg-white p-6 shadow-2xl"
+        transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto mt-20 max-w-3xl"
       >
-        <div className="flex items-center justify-between rounded-2xl bg-blue-100 p-5">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-widest text-blue-600">Stripe event</div>
-            <div className="mt-1 text-lg font-bold text-slate-900">customer.subscription.deleted</div>
-            <div className="mt-1 text-sm text-slate-500">Sarah K. · Pro · $24.99/mo</div>
+        <div className="absolute inset-x-10 -bottom-6 h-24 rounded-[3rem] bg-blue-500/20 blur-3xl" aria-hidden />
+        <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white/80 p-7 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.25)] backdrop-blur-xl">
+          <div className="flex items-center justify-between rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100/60 p-5">
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">Stripe event</div>
+              <div className="mt-1.5 font-mono text-base font-semibold text-slate-900">
+                customer.subscription.deleted
+              </div>
+              <div className="mt-1 text-sm text-slate-500">Sarah K. · Pro · $24.99/mo</div>
+            </div>
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
+              <Zap className="h-5 w-5 text-blue-500" />
+            </div>
           </div>
-          <Zap className="h-9 w-9 text-blue-500" />
-        </div>
-        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-green-200 bg-green-50 p-4 text-green-700">
-          <CheckCircle2 className="h-5 w-5 shrink-0" />
-          <div className="text-sm font-medium">Winback email sent · Resubscribed in 2 days</div>
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border border-green-200/70 bg-green-50 p-4 text-green-700">
+            <CheckCircle2 className="h-5 w-5 shrink-0" />
+            <div className="text-sm font-medium">Winback email sent · Resubscribed in 2 days</div>
+          </div>
         </div>
       </motion.div>
     </section>
@@ -116,7 +136,9 @@ function Step({ number, title, tagline, copy, visual, reversed = false }: StepPr
         <div className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
           {number} · {title}
         </div>
-        <h3 className="mt-4 text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 md:text-5xl">{tagline}</h3>
+        <h3 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tightest text-slate-900 md:text-5xl">
+          {tagline}
+        </h3>
         <p className="mt-6 max-w-md text-lg leading-8 text-slate-500">{copy}</p>
       </div>
       <div className={reversed ? "lg:order-1" : ""}>{visual}</div>
@@ -239,7 +261,7 @@ function HowItWorks() {
           className="mx-auto max-w-2xl text-center"
         >
           <EyebrowBadge>How it works</EyebrowBadge>
-          <h2 className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight text-slate-900 md:text-6xl">
+          <h2 className="mt-6 text-5xl font-semibold leading-[1.03] tracking-tightest text-slate-900 md:text-6xl">
             Three steps.
             <br />
             Zero manual work.
@@ -306,7 +328,7 @@ function FinalCTA({ navigate }: { navigate: NavigateFunction }) {
         transition={{ duration: 0.6 }}
         className="mx-auto max-w-3xl px-6 py-32 text-center lg:py-40"
       >
-        <h2 className="text-5xl font-bold leading-[1.05] tracking-tight text-slate-900 md:text-6xl">
+        <h2 className="text-5xl font-semibold leading-[1.03] tracking-tightest text-slate-900 md:text-6xl">
           Ready to recover?
         </h2>
         <p className="mx-auto mt-6 max-w-md text-lg leading-8 text-slate-500">
