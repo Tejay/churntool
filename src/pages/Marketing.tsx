@@ -66,7 +66,8 @@ function Hero({ navigate }: { navigate: NavigateFunction }) {
           </span>
         </h1>
         <p className="mx-auto mt-7 max-w-2xl text-xl leading-8 text-slate-500 sm:text-[1.375rem] sm:leading-9">
-          Connect Stripe. Every cancellation triggers a personalised winback email — written for the reason they left.
+          The moment a customer cancels, Winback sends a personalised email — grounded in what you've delivered
+          recently, their subscription history, and any reason they shared for leaving.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           <Button size="lg" className="rounded-full px-7 text-base" onClick={() => navigate("/register")}>
@@ -80,7 +81,7 @@ function Hero({ navigate }: { navigate: NavigateFunction }) {
           </button>
         </div>
         <p className="mt-6 text-[13px] text-slate-400">
-          Free until your first recovery · £49/mo + 10% thereafter · No card required
+          Free first recovery. Then £49/mo + 10% of what we win back.
         </p>
       </motion.div>
 
@@ -339,8 +340,9 @@ function FinalCTA({ navigate }: { navigate: NavigateFunction }) {
             Get started <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
-        <p className="mt-4 text-xs text-slate-400">
-          £49/mo + 10% of recovered MRR (first year only) · No card required
+        <p className="mx-auto mt-4 max-w-md text-xs leading-6 text-slate-400">
+          Free until your first recovery. Then £49/mo + 10% of recovered revenue — first year each subscriber stays
+          back. No card required.
         </p>
       </motion.div>
     </section>
