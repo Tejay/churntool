@@ -127,13 +127,13 @@ export default function SubscriberDetail({ subscriber, onClose, onStatusChange }
                 <div className="grid grid-cols-2 gap-2">
                   <Button
                     variant="outline"
-                    className="rounded-xl"
+                    className="rounded-full"
                     onClick={() => onStatusChange?.(subscriber.id, "contacted")}
                   >
                     <RotateCcw className="mr-2 h-4 w-4" /> Resend
                   </Button>
                   <Button
-                    className="rounded-xl"
+                    className="rounded-full"
                     onClick={() => onStatusChange?.(subscriber.id, "recovered")}
                   >
                     <CheckCircle2 className="mr-2 h-4 w-4" /> Mark recovered

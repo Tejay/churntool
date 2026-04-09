@@ -20,13 +20,19 @@ export function OnboardingLayout() {
   );
 
   return (
-    <div className="min-h-screen bg-blue-50 text-slate-900">
-      <div className="mx-auto max-w-3xl px-6 py-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900">
-          <Zap className="h-4 w-4 text-blue-500" /> Winback
+    <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-[13px] font-medium text-slate-500 hover:text-slate-900"
+        >
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600">
+            <Zap className="h-3 w-3 text-white" />
+          </div>
+          Winback
         </Link>
 
-        <div className="mt-8 rounded-[2rem] border bg-white p-4 shadow-sm">
+        <div className="mt-10 rounded-3xl border border-slate-200/70 bg-white/80 p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] backdrop-blur-xl">
           <ol className="grid grid-cols-4 gap-2">
             {STEPS.map((step, i) => {
               const done = i < activeIdx;
@@ -35,12 +41,12 @@ export function OnboardingLayout() {
               return (
                 <li
                   key={step.key}
-                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-left ${
-                    active ? "bg-blue-100" : done ? "bg-slate-50" : "bg-white"
+                  className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-left transition ${
+                    active ? "bg-blue-50" : done ? "bg-slate-50" : "bg-white"
                   }`}
                 >
                   <div
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
                       active
                         ? "bg-blue-600 text-white"
                         : done
@@ -51,10 +57,10 @@ export function OnboardingLayout() {
                     {done ? <CheckCircle2 className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
                       Step {i + 1}
                     </div>
-                    <div className={`truncate text-sm font-semibold ${active ? "text-slate-900" : "text-slate-600"}`}>
+                    <div className={`truncate text-[13px] font-semibold ${active ? "text-slate-900" : "text-slate-600"}`}>
                       {step.label}
                     </div>
                   </div>
@@ -64,7 +70,7 @@ export function OnboardingLayout() {
           </ol>
         </div>
 
-        <main className="mt-8">
+        <main className="mt-10">
           <Outlet />
         </main>
       </div>
@@ -88,13 +94,13 @@ function StepShell({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="rounded-[2rem] border bg-white p-8 shadow-sm"
+      className="rounded-3xl border border-slate-200/70 bg-white p-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
     >
-      <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700">
+      <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-700">
         {eyebrow}
       </span>
-      <h1 className="mt-4 text-3xl font-bold tracking-tight">{title}</h1>
-      <p className="mt-2 text-slate-500">{description}</p>
+      <h1 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">{title}</h1>
+      <p className="mt-2 text-[15px] text-slate-500">{description}</p>
       <div className="mt-8">{children}</div>
     </motion.div>
   );
@@ -135,7 +141,7 @@ export function StripeStep() {
               <CheckCircle2 className="h-4 w-4" /> Connected
             </span>
           ) : (
-            <Button onClick={handleConnect} disabled={connecting} className="rounded-xl">
+            <Button onClick={handleConnect} disabled={connecting} className="rounded-full">
               {connecting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Connecting…
@@ -162,7 +168,7 @@ export function StripeStep() {
       <div className="mt-8 flex justify-end">
         <Button
           size="lg"
-          className="rounded-xl"
+          className="rounded-full"
           disabled={!onboarding.stripeConnected}
           onClick={() => navigate("/onboarding/gmail")}
         >
@@ -208,7 +214,7 @@ export function GmailStep() {
               <CheckCircle2 className="h-4 w-4" /> Connected
             </span>
           ) : (
-            <Button onClick={handleConnect} disabled={connecting} className="rounded-xl">
+            <Button onClick={handleConnect} disabled={connecting} className="rounded-full">
               {connecting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Connecting…
@@ -233,12 +239,12 @@ export function GmailStep() {
       </div>
 
       <div className="mt-8 flex items-center justify-between">
-        <Button variant="outline" className="rounded-xl" onClick={() => navigate("/onboarding/stripe")}>
+        <Button variant="outline" className="rounded-full" onClick={() => navigate("/onboarding/stripe")}>
           Back
         </Button>
         <Button
           size="lg"
-          className="rounded-xl"
+          className="rounded-full"
           disabled={!onboarding.gmailConnected}
           onClick={() => navigate("/onboarding/changelog")}
         >
@@ -280,12 +286,12 @@ export function ChangelogStep() {
       </p>
 
       <div className="mt-8 flex items-center justify-between">
-        <Button variant="outline" className="rounded-xl" onClick={() => navigate("/onboarding/gmail")}>
+        <Button variant="outline" className="rounded-full" onClick={() => navigate("/onboarding/gmail")}>
           Back
         </Button>
         <Button
           size="lg"
-          className="rounded-xl"
+          className="rounded-full"
           disabled={onboarding.changelog.trim().length < 10}
           onClick={() => navigate("/onboarding/review")}
         >
@@ -352,10 +358,10 @@ It's a much more reliable experience now. If you're open to it, I'd love for you
       </div>
 
       <div className="mt-8 flex items-center justify-between">
-        <Button variant="outline" className="rounded-xl" onClick={() => navigate("/onboarding/changelog")}>
+        <Button variant="outline" className="rounded-full" onClick={() => navigate("/onboarding/changelog")}>
           Back
         </Button>
-        <Button size="lg" className="rounded-xl" onClick={handleFinish}>
+        <Button size="lg" className="rounded-full" onClick={handleFinish}>
           Approve & enter dashboard <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>

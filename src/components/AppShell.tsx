@@ -1,10 +1,10 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { LayoutDashboard, Settings as SettingsIcon, LogOut, Zap } from "lucide-react";
+import { LogOut, Zap } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const NAV = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/settings", label: "Settings", icon: SettingsIcon },
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/settings", label: "Settings" },
 ];
 
 export default function AppShell() {
@@ -24,60 +24,59 @@ export default function AppShell() {
     .toUpperCase();
 
   return (
-    <div className="min-h-screen bg-blue-50 text-slate-900">
-      <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10">
-        <header className="mb-8 flex flex-col gap-4 rounded-[2rem] border bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">
-              <Zap className="h-5 w-5 text-white" />
+    <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
+      <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/75 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 lg:px-8">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="flex items-center gap-2"
+          >
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600">
+              <Zap className="h-3.5 w-3.5 text-white" />
             </div>
-            <div>
-              <div className="text-lg font-bold text-slate-900">Winback</div>
-              <div className="text-xs text-slate-500">Churn recovery on autopilot</div>
-            </div>
-          </div>
+            <span className="text-[15px] font-semibold tracking-tight text-slate-900">Winback</span>
+          </button>
 
-          <nav className="flex flex-wrap items-center gap-2">
-            {NAV.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    `inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-                      isActive ? "bg-slate-900 text-white" : "bg-white text-slate-700 hover:bg-slate-100"
-                    }`
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </NavLink>
-              );
-            })}
+          <nav className="flex items-center gap-1">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `rounded-full px-4 py-1.5 text-[13px] font-medium transition ${
+                    isActive
+                      ? "bg-slate-900 text-white"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
 
-            <div className="mx-2 hidden h-6 w-px bg-slate-200 md:block" />
-
-            <div className="flex items-center gap-2 rounded-full border bg-white px-2 py-1">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded-full bg-slate-100/80 py-1 pl-1 pr-3">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-[10px] font-semibold text-white">
                 {initials}
               </div>
-              <div className="hidden text-xs text-slate-600 md:block">{user?.name}</div>
-              <button
-                onClick={handleLogout}
-                className="rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                title="Log out"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
+              <span className="hidden text-[12px] font-medium text-slate-700 md:block">{user?.name}</span>
             </div>
-          </nav>
-        </header>
+            <button
+              onClick={handleLogout}
+              className="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+              title="Log out"
+              aria-label="Log out"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </header>
 
-        <main>
-          <Outlet />
-        </main>
-      </div>
+      <main className="mx-auto max-w-6xl px-6 py-12 lg:px-8 lg:py-16">
+        <Outlet />
+      </main>
     </div>
   );
 }

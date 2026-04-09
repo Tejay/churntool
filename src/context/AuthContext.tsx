@@ -13,6 +13,7 @@ export type OnboardingData = {
   founderName: string;
   completed: boolean;
   billingAdded: boolean;
+  emailsPaused: boolean;
 };
 
 type AuthState = {
@@ -37,6 +38,7 @@ const defaultOnboarding: OnboardingData = {
   founderName: "",
   completed: false,
   billingAdded: false,
+  emailsPaused: false,
 };
 
 const AuthContext = createContext<AuthState | null>(null);
