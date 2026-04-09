@@ -7,38 +7,12 @@ import {
   ChevronLeft,
   Play,
   ShieldCheck,
-  Sparkles,
   Brain,
   Zap,
   Link as LinkIcon,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-const NAV_ITEMS = ["home", "detect", "decide", "act", "learn"];
-
-function NavButton({
-  current,
-  setCurrent,
-  item,
-}: {
-  current: string;
-  setCurrent: (v: string) => void;
-  item: string;
-}) {
-  const active = current === item;
-  return (
-    <button
-      onClick={() => setCurrent(item)}
-      className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-        active ? "bg-slate-900 text-white" : "bg-white text-slate-700 hover:bg-slate-100"
-      }`}
-    >
-      {item === "home" ? "Overview" : item.charAt(0).toUpperCase() + item.slice(1)}
-    </button>
-  );
-}
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
@@ -58,47 +32,7 @@ function EyebrowBadge({ children }: { children: React.ReactNode }) {
   );
 }
 
-function EarlyAccessForm() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setSubmitted(true);
-    setEmail("");
-  };
-
-  if (submitted) {
-    return (
-      <div className="mt-6 flex items-center gap-2 rounded-2xl bg-blue-100 px-5 py-4 text-blue-700">
-        <CheckCircle2 className="h-5 w-5 shrink-0" />
-        <span className="font-medium">You're on the list — we'll be in touch soon.</span>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="mt-6">
-      <div className="flex flex-col gap-3 sm:flex-row">
-        <Input
-          type="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="h-12 rounded-2xl sm:w-72"
-          required
-        />
-        <Button type="submit" size="lg" className="rounded-2xl whitespace-nowrap">
-          Request early access <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-      <p className="mt-2 text-xs text-slate-400">No credit card. Setup in a day.</p>
-    </form>
-  );
-}
-
-function SectionHero({ eyebrow, title, copy, cta, secondary, icon, showCTA }: any) {
+function SectionHero({ eyebrow, title, copy, cta, secondary, icon }: any) {
   return (
     <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
       <div>
@@ -115,7 +49,6 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon, showCTA }: an
             </Button>
           ) : null}
         </div>
-        {showCTA && <EarlyAccessForm />}
       </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -129,105 +62,51 @@ function SectionHero({ eyebrow, title, copy, cta, secondary, icon, showCTA }: an
   );
 }
 
-function ProcessNav({ setCurrent }: { setCurrent: (v: string) => void }) {
-  const items = [
-    { key: "detect", title: "Detect", desc: "Connect Stripe — cancellations flow in automatically" },
-    { key: "decide", title: "Decide", desc: "Choose best action and channel" },
-    { key: "act", title: "Act", desc: "Launch personalized recovery" },
-    { key: "learn", title: "Learn", desc: "Improve outcomes over time" },
-  ];
-
-  return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {items.map((item, i) => (
-        <motion.button
-          key={item.key}
-          whileHover={{ y: -4 }}
-          onClick={() => setCurrent(item.key)}
-          className="rounded-[1.75rem] border bg-white p-6 text-left shadow-sm transition hover:shadow-lg"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
-              0{i + 1}
-            </div>
-            <ArrowRight className="h-4 w-4 text-slate-400" />
-          </div>
-          <div className="mt-4 text-2xl font-bold text-slate-900">{item.title}</div>
-          <p className="mt-2 text-sm leading-6 text-slate-500">{item.desc}</p>
-        </motion.button>
-      ))}
-    </div>
-  );
-}
-
 function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
+  const navigate = useNavigate();
   return (
-    <div className="space-y-12">
-      <SectionHero
-        eyebrow="AI churn recovery"
-        title="Connect Stripe. Win back churned customers automatically."
-        copy="Every cancellation triggers a personalised winback campaign — the right message, the right channel, at the right time. No manual work. No integrations beyond Stripe."
-        cta={{ label: "See a live recovery", onClick: () => setCurrent("act") }}
-        secondary={{ label: "How it works", onClick: () => setCurrent("detect") }}
-        showCTA
-        icon={
-          <div className="space-y-4">
-            <div className="flex items-center justify-between rounded-2xl border bg-blue-100 p-5">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Stripe event received</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">customer.subscription.deleted</div>
-                <div className="text-sm text-slate-500 mt-1">Sarah K. · Pro · $24.99/mo</div>
-              </div>
-              <Zap className="h-9 w-9 text-blue-500" />
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Card className="rounded-2xl">
-                <CardContent className="p-5">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Detect</div>
-                  <div className="mt-2 font-bold text-slate-900">Cancellation logged</div>
-                  <div className="text-sm text-slate-500">Reason: small issues added up</div>
-                </CardContent>
-              </Card>
-              <Card className="rounded-2xl">
-                <CardContent className="p-5">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Decide</div>
-                  <div className="mt-2 font-bold text-slate-900">Winback message</div>
-                  <div className="text-sm text-slate-500">Channel: Email</div>
-                </CardContent>
-              </Card>
-              <Card className="rounded-2xl">
-                <CardContent className="p-5">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Act</div>
-                  <div className="mt-2 font-bold text-slate-900">Email sent to Sarah</div>
-                  <div className="text-sm text-slate-500">Personalised to her reason</div>
-                </CardContent>
-              </Card>
-              <Card className="rounded-2xl">
-                <CardContent className="p-5">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Learn</div>
-                  <div className="mt-2 font-bold text-slate-900">Resubscribed</div>
-                  <div className="text-sm text-slate-500">$24.99/mo recovered</div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        }
-      />
-
-      <section className="rounded-[2rem] border bg-white p-8 shadow-sm">
-        <div className="mb-6 flex items-center gap-3">
-          <Sparkles className="h-5 w-5 text-blue-500" />
-          <h2 className="text-2xl font-bold text-slate-900">Open each part of the system</h2>
+    <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div>
+        <EyebrowBadge>AI churn recovery</EyebrowBadge>
+        <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          Connect Stripe.<br />Win back churned customers automatically.
+        </h1>
+        <p className="mt-5 max-w-xl text-lg leading-8 text-slate-500">
+          Every cancellation triggers a personalised winback email — written for the reason they left.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <Button size="lg" className="rounded-2xl" onClick={() => navigate("/register")}>
+            Get started <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          <button
+            onClick={() => setCurrent("detect")}
+            className="text-sm font-medium text-slate-500 hover:text-slate-900"
+          >
+            How it works →
+          </button>
         </div>
-        <ProcessNav setCurrent={setCurrent} />
-      </section>
+      </div>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <Stat label="Users recovered" value="10–20%" />
-        <Stat label="Time to outcome" value="30 days" />
-        <Stat label="Actions automated" value="100%" />
-      </section>
-    </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45 }}
+        className="rounded-[2rem] border bg-white p-6 shadow-2xl"
+      >
+        <div className="flex items-center justify-between rounded-2xl bg-blue-100 p-5">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-blue-600">Stripe event</div>
+            <div className="mt-1 text-lg font-bold text-slate-900">customer.subscription.deleted</div>
+            <div className="mt-1 text-sm text-slate-500">Sarah K. · Pro · $24.99/mo</div>
+          </div>
+          <Zap className="h-9 w-9 text-blue-500" />
+        </div>
+        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-green-200 bg-green-50 p-4 text-green-700">
+          <CheckCircle2 className="h-5 w-5 shrink-0" />
+          <div className="text-sm font-medium">Winback email sent · Resubscribed in 2 days</div>
+        </div>
+      </motion.div>
+    </section>
   );
 }
 
@@ -625,18 +504,14 @@ export default function Marketing() {
   return (
     <div className="min-h-screen bg-blue-50 text-slate-900">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10">
-        <header className="mb-10 flex flex-col gap-4 rounded-[2rem] border bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
-          <div>
-            <div className="text-lg font-bold text-slate-900">Winback</div>
-            <div className="text-sm text-slate-500">
-              Recover at-risk users automatically — no manual work required
+        <header className="mb-12 flex items-center justify-between rounded-[2rem] border bg-white px-5 py-3 shadow-sm">
+          <button onClick={() => setCurrent("home")} className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600">
+              <Zap className="h-4 w-4 text-white" />
             </div>
-          </div>
-          <nav className="flex flex-wrap items-center gap-2">
-            {NAV_ITEMS.map((item) => (
-              <NavButton key={item} current={current} setCurrent={setCurrent} item={item} />
-            ))}
-            <div className="mx-2 hidden h-6 w-px bg-slate-200 md:block" />
+            <span className="text-lg font-bold text-slate-900">Winback</span>
+          </button>
+          <nav className="flex items-center gap-1">
             <Link
               to="/login"
               className="rounded-full px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
