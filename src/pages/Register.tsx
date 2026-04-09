@@ -68,7 +68,7 @@ export default function Register() {
             <Button type="submit" size="lg" className="w-full rounded-xl">
               Create account <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="text-xs text-slate-400 text-center">No credit card. Cancel anytime.</p>
+            <p className="text-xs text-slate-400 text-center">Free until your first recovery. No card required.</p>
           </form>
 
           <p className="mt-6 text-center text-sm text-slate-500">

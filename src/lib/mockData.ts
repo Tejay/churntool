@@ -109,7 +109,7 @@ export const mockSubscribers: Subscriber[] = [
     cancelledAt: "2026-04-02",
     reason: "Speed was frustrating",
     reasonCategory: "quality",
-    status: "recovered",
+    status: "contacted",
     emailsSent: 1,
     lastTouch: "2026-04-04",
     tenureMonths: 9,

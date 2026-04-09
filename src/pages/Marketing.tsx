@@ -85,6 +85,9 @@ function HomePage({ setCurrent }: { setCurrent: (v: string) => void }) {
             How it works →
           </button>
         </div>
+        <p className="mt-4 text-xs text-slate-400">
+          Free until your first recovery · Then £49/mo + 10% of what we win back (first year only) · No card required
+        </p>
       </div>
 
       <motion.div

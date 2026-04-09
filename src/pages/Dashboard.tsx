@@ -5,6 +5,7 @@ import { mockSubscribers, subscriberStats, type Subscriber, type SubscriberStatu
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import SubscriberDetail from "@/components/SubscriberDetail";
+import BillingBanner from "@/components/BillingBanner";
 
 const FILTERS: { key: "all" | SubscriberStatus; label: string }[] = [
   { key: "all", label: "All" },
@@ -64,6 +65,17 @@ export default function Dashboard() {
 
   const stats = useMemo(() => subscriberStats(subscribers), [subscribers]);
 
+  const latestRecovered = useMemo(() => {
+    const recovered = subscribers.filter((s) => s.status === "recovered");
+    if (recovered.length === 0) return null;
+    return recovered.reduce((latest, s) => (s.cancelledAt > latest.cancelledAt ? s : latest));
+  }, [subscribers]);
+
+  const pendingCount = useMemo(
+    () => subscribers.filter((s) => s.status === "pending").length,
+    [subscribers],
+  );
+
   const filtered = useMemo(() => {
     return subscribers.filter((s) => {
       if (filter !== "all" && s.status !== filter) return false;
@@ -83,6 +95,13 @@ export default function Dashboard() {
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="mt-1 text-slate-500">Every cancellation, every recovery. All in one view.</p>
       </div>
+
+      <BillingBanner
+        recoveredCount={stats.recoveredCount}
+        pendingCount={pendingCount}
+        latestRecoveredName={latestRecovered?.name}
+        latestRecoveredMrr={latestRecovered?.mrr}
+      />
 
       <div className="grid gap-4 md:grid-cols-4">
         <MetricCard

@@ -359,6 +359,10 @@ It's a much more reliable experience now. If you're open to it, I'd love for you
           Approve & enter dashboard <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
+      <p className="mt-4 text-center text-xs text-slate-400">
+        Your first recovery is free. After that: £49/mo + 10% of recovered MRR for the first year each subscriber stays
+        back.
+      </p>
     </StepShell>
   );
 }
