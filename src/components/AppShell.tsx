@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { LogOut, Zap } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const NAV = [
@@ -26,15 +26,12 @@ export default function AppShell() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
       <header className="sticky top-0 z-30 border-b border-slate-200/60 bg-white/75 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
           <button
             onClick={() => navigate("/dashboard")}
-            className="flex items-center gap-2"
+            className="flex items-center"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600">
-              <Zap className="h-3.5 w-3.5 text-white" />
-            </div>
-            <span className="text-[15px] font-semibold tracking-tight text-slate-900">Winback</span>
+            <img src="/winback-logo.svg" alt="Winback" className="h-6" />
           </button>
 
           <nav className="flex items-center gap-1">

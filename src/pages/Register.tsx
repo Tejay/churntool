@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
@@ -22,14 +22,8 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
       <div className="mx-auto max-w-md px-6 py-20">
-        <Link
-          to="/"
-          className="mb-10 inline-flex items-center gap-2 text-[13px] font-medium text-slate-500 hover:text-slate-900"
-        >
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600">
-            <Zap className="h-3 w-3 text-white" />
-          </div>
-          Winback
+        <Link to="/" className="mb-10 inline-block">
+          <img src="/winback-logo.svg" alt="Winback" className="h-6" />
         </Link>
         <div className="rounded-3xl border border-slate-200/70 bg-white p-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
           <h1 className="text-3xl font-semibold tracking-tight">Create your account.</h1>

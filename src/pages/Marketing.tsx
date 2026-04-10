@@ -17,12 +17,9 @@ function Header({ navigate }: { navigate: NavigateFunction }) {
     document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
-    <header className="mb-24 flex items-center justify-between rounded-[2rem] border border-slate-200/60 bg-white/70 px-5 py-3 shadow-sm backdrop-blur-xl">
-      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600">
-          <Zap className="h-4 w-4 text-white" />
-        </div>
-        <span className="text-[17px] font-semibold tracking-tight text-slate-900">Winback</span>
+    <header className="mb-24 flex items-center justify-between rounded-[2rem] border border-slate-200/60 bg-white/70 px-6 py-4 shadow-sm backdrop-blur-xl">
+      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center">
+        <img src="/winback-logo.svg" alt="Winback" className="h-7" />
       </button>
       <nav className="flex items-center gap-1">
         <button

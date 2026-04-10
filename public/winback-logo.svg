@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 62" width="600" height="124">
+
+  <!-- Text: font-size 40, baseline y=48, cap top ~y=19, centre ~y=33 -->
+  <!-- Mark: top bar y=19, bottom bar y=46, centre y=32.5 — aligned -->
+  <path d="M8 19 L36 19 Q50 19 50 32 Q50 46 36 46 L10 46"
+        stroke="#16a34a" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  <path d="M10 46 L18 38" stroke="#16a34a" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M10 46 L18 54" stroke="#16a34a" stroke-width="2.8" stroke-linecap="round"/>
+
+  <text x="70" y="48"
+        font-family="DM Sans, Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-weight="200"
+        font-size="40"
+        letter-spacing="-0.8">
+    <tspan fill="#374151">win</tspan><tspan fill="#16a34a">back</tspan>
+  </text>
+
+</svg>

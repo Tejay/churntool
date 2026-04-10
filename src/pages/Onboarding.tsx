@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, CreditCard, Mail, FileText, Send, Zap, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, CreditCard, Mail, FileText, Send, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 
@@ -22,14 +22,8 @@ export function OnboardingLayout() {
   return (
     <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
       <div className="mx-auto max-w-3xl px-6 py-12">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-[13px] font-medium text-slate-500 hover:text-slate-900"
-        >
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600">
-            <Zap className="h-3 w-3 text-white" />
-          </div>
-          Winback
+        <Link to="/" className="inline-block">
+          <img src="/winback-logo.svg" alt="Winback" className="h-6" />
         </Link>
 
         <div className="mt-10 rounded-3xl border border-slate-200/70 bg-white/80 p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] backdrop-blur-xl">
