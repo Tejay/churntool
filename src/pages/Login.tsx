@@ -22,7 +22,7 @@ export default function Login() {
     <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
       <div className="mx-auto max-w-md px-6 py-20">
         <Link to="/" className="mb-10 inline-block">
-          <img src="/winback-logo.svg" alt="Winback" className="h-6" />
+          <img src="/winback-logo.svg" alt="Winback" className="h-8" />
         </Link>
         <div className="rounded-3xl border border-slate-200/70 bg-white p-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
           <h1 className="text-3xl font-semibold tracking-tight">Welcome back.</h1>

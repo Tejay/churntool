@@ -31,7 +31,7 @@ export default function AppShell() {
             onClick={() => navigate("/dashboard")}
             className="flex items-center"
           >
-            <img src="/winback-logo.svg" alt="Winback" className="h-6" />
+            <img src="/winback-logo.svg" alt="Winback" className="h-8" />
           </button>
 
           <nav className="flex items-center gap-1">

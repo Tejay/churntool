@@ -23,7 +23,7 @@ export function OnboardingLayout() {
     <div className="min-h-screen bg-[#f5f5f7] text-slate-900">
       <div className="mx-auto max-w-3xl px-6 py-12">
         <Link to="/" className="inline-block">
-          <img src="/winback-logo.svg" alt="Winback" className="h-6" />
+          <img src="/winback-logo.svg" alt="Winback" className="h-8" />
         </Link>
 
         <div className="mt-10 rounded-3xl border border-slate-200/70 bg-white/80 p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] backdrop-blur-xl">
