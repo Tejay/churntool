@@ -56,7 +56,10 @@ function Hero({ navigate }: { navigate: NavigateFunction }) {
       >
         <EyebrowBadge>New · AI churn recovery</EyebrowBadge>
         <h1 className="mt-6 text-[3.25rem] font-semibold leading-[1.02] tracking-tightest text-slate-900 sm:text-7xl md:text-[5.5rem]">
-          Win back churn.
+          <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 200, letterSpacing: "-0.02em" }}>
+            <span className="text-slate-700">Win</span><span className="text-green-600">back</span>
+          </span>{" "}
+          lost customers.
           <br />
           <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
             Automatically.
