@@ -263,7 +263,7 @@ export default function Dashboard() {
           accent="bg-emerald-100"
         />
         <MetricTile
-          label="At risk"
+          label="Pending"
           value={String(stats.atRiskCount)}
           icon={<Users className="h-5 w-5 text-amber-600" />}
           accent="bg-amber-100"
